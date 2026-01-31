@@ -1,276 +1,242 @@
 <!-- Register Form SmartParking -->
-<div class="min-h-screen bg-background-secondary flex items-center justify-center px-4 py-12">
-  <div class="max-w-md w-full">
-
-    <!-- Card del formulario -->
-    <div class="bg-background-primary rounded-2xl shadow-xl p-8">
-
-      <!-- Header/Branding -->
-      <div class="text-center mb-8">
-        <h1 class="text-text-title font-bold text-3xl mb-2">
-          SmartParking
-        </h1>
-        <p class="text-text-secondary text-sm mb-6">
-          Reservation & Monitoring System
-        </p>
-
-        <h2 class="text-text-primary font-bold text-2xl mb-2">
-          Register
-        </h2>
-        <p class="text-text-secondary text-sm">
-          Sign in with your institutional account
-        </p>
-      </div>
-
-      <!-- Formulario -->
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-6">
-
-        <!-- Campo Nombre Completo -->
-        <div>
-          <label for="firstName" class="block text-text-primary font-semibold text-sm mb-2">
-            First Name
-          </label>
-          <div class="relative">
-            <input
-              id="firstName"
-              type="text"
-              formControlName="firstName"
-              placeholder="Enter your full name"
-              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-button-primary focus:border-transparent transition-all duration-200 text-text-primary placeholder-text-muted"
-              [class.border-red-500]="hasError('firstName')"
-              [class.focus:ring-red-500]="hasError('firstName')"
-            >
+<div class="login-page-container">
+  <div class="background-overlay"></div>
+  <div class="login-content-wrapper">
+    <div class="max-w-md w-full fade-in-up">
+      <!-- Card del formulario Glassmorphism -->
+      <div class="glass-card p-8">
+        <!-- Header/Branding -->
+        <div class="text-center mb-8">
+          <div class="flex justify-center mb-4">
+            <img src="assets/images/logo.png" alt="SmartParking Logo"
+              class="w-16 h-16 drop-shadow-md animate-bounce-slow">
           </div>
-          <!-- Mensaje de error -->
-          @if (hasError('firstName')) {
-            <p class="text-red-500 text-xs mt-1">
-              {{ getErrorMessage('firstName') }}
-            </p>
-          }
-        </div>
-        <div>
-          <label for="lastName" class="block text-text-primary font-semibold text-sm mb-2">
-            Last Name
-          </label>
-          <div class="relative">
-            <input
-              id="lastName"
-              type="text"
-              formControlName="lastName"
-              placeholder="Enter your full name"
-              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-button-primary focus:border-transparent transition-all duration-200 text-text-primary placeholder-text-muted"
-              [class.border-red-500]="hasError('lastName')"
-              [class.focus:ring-red-500]="hasError('lastName')"
-            >
-          </div>
-          <!-- Mensaje de error -->
-          @if (hasError('lastName')) {
-            <p class="text-red-500 text-xs mt-1">
-              {{ getErrorMessage('lastName') }}
-            </p>
-          }
+          <h1 class="text-text-title font-black text-4xl mb-2 drop-shadow-sm tracking-tighter">
+            SmartParking
+          </h1>
+          <p class="text-text-secondary text-[10px] font-black uppercase tracking-[0.3em] mb-6 opacity-60">
+            Smart Reservation System
+          </p>
+
+          <h2 class="text-text-primary font-bold text-2xl mb-2">
+            Register
+          </h2>
+          <p class="text-text-secondary text-sm">
+            Join our smart parking community
+          </p>
         </div>
 
-        <!-- Campo Email -->
-        <div>
-          <label for="email" class="block text-text-primary font-semibold text-sm mb-2">
-            Email Address
-          </label>
-          <div class="relative">
-            <input
-              id="email"
-              type="email"
-              formControlName="email"
-              placeholder="your.name@email.com"
-              class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-button-primary focus:border-transparent transition-all duration-200 text-text-primary placeholder-text-muted"
-              [class.border-red-500]="hasError('email')"
-              [class.focus:ring-red-500]="hasError('email')"
-            >
-            <!-- Icono de email -->
-            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-              <svg class="w-5 h-5 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
-              </svg>
+        <!-- Formulario -->
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-6">
+
+          <div class="grid grid-cols-2 gap-4">
+            <!-- Campo Nombre -->
+            <div>
+              <label for="firstName" class="block text-text-primary font-semibold text-sm mb-2">
+                First Name
+              </label>
+              <div class="relative">
+                <input id="firstName" type="text" formControlName="firstName" placeholder="First Name"
+                  class="w-full px-4 py-3 bg-white/5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-button-primary focus:border-transparent transition-all duration-200 text-text-primary placeholder-text-muted backdrop-blur-sm"
+                  [class.border-red-500]="hasError('firstName')" [class.focus:ring-red-500]="hasError('firstName')">
+              </div>
+              @if (hasError('firstName')) {
+              <p class="text-red-500 text-xs mt-1 font-bold">
+                {{ getErrorMessage('firstName') }}
+              </p>
+              }
+            </div>
+
+            <!-- Campo Apellido -->
+            <div>
+              <label for="lastName" class="block text-text-primary font-semibold text-sm mb-2">
+                Last Name
+              </label>
+              <div class="relative">
+                <input id="lastName" type="text" formControlName="lastName" placeholder="Last Name"
+                  class="w-full px-4 py-3 bg-white/5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-button-primary focus:border-transparent transition-all duration-200 text-text-primary placeholder-text-muted backdrop-blur-sm"
+                  [class.border-red-500]="hasError('lastName')" [class.focus:ring-red-500]="hasError('lastName')">
+              </div>
+              @if (hasError('lastName')) {
+              <p class="text-red-500 text-xs mt-1 font-bold">
+                {{ getErrorMessage('lastName') }}
+              </p>
+              }
             </div>
           </div>
-          <p class="text-text-muted text-xs mt-1">
-            Use your official institutional email address
-          </p>
-          <!-- Mensaje de error -->
-          @if (hasError('email')) {
-            <p class="text-red-500 text-xs mt-1">
+
+          <!-- Campo Email -->
+          <div>
+            <label for="email" class="block text-text-primary font-semibold text-sm mb-2">
+              Email Address
+            </label>
+            <div class="relative">
+              <input id="email" type="email" formControlName="email" placeholder="your.name@email.com"
+                class="w-full px-4 py-3 pr-12 bg-white/5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-button-primary focus:border-transparent transition-all duration-200 text-text-primary placeholder-text-muted backdrop-blur-sm"
+                [class.border-red-500]="hasError('email')" [class.focus:ring-red-500]="hasError('email')">
+              <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                <svg class="w-5 h-5 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207">
+                  </path>
+                </svg>
+              </div>
+            </div>
+            @if (hasError('email')) {
+            <p class="text-red-500 text-xs mt-1 font-bold">
               {{ getErrorMessage('email') }}
             </p>
-          }
-        </div>
-
-        <div>
-          <label for="password" class="block text-text-primary font-semibold text-sm mb-2">
-            Role
-          </label>
-          <div class="relative">
-            <select
-              id="role"
-              formControlName="role"
-              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-button-primary focus:border-transparent transition-all duration-200 text-text-primary"
-            >
-              <option value="university_member">University Student</option>
-              <option value="administrator">Parking Administrator</option>
-            </select>
+            }
           </div>
-          <p class="text-red-500 text-xs mt-1" *ngIf="hasError('role')">
-            {{ getErrorMessage('role') }}
-          </p>
 
-        </div>
-
-        <!-- Campo Contraseña -->
-        <div>
-          <label for="password" class="block text-text-primary font-semibold text-sm mb-2">
-            Password
-          </label>
-          <div class="relative">
-            <input
-              id="password"
-              [type]="showPassword ? 'text' : 'password'"
-              formControlName="password"
-              placeholder="Enter your password"
-              class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-button-primary focus:border-transparent transition-all duration-200 text-text-primary placeholder-text-muted"
-              [class.border-red-500]="hasError('password')"
-              [class.focus:ring-red-500]="hasError('password')"
-            >
-            <!-- Botón para mostrar/ocultar contraseña -->
-            <button
-              type="button"
-              (click)="togglePasswordVisibility()"
-              class="absolute inset-y-0 right-0 pr-3 flex items-center text-text-muted hover:text-text-primary transition-colors duration-200"
-            >
-              @if (showPassword) {
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
-                </svg>
-              } @else {
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                </svg>
-              }
-            </button>
+          <!-- Campo Rol -->
+          <div>
+            <label for="role" class="block text-text-primary font-semibold text-sm mb-2">
+              Role
+            </label>
+            <div class="relative">
+              <select id="role" formControlName="role"
+                class="w-full px-4 py-3 bg-white/5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-button-primary focus:border-transparent transition-all duration-200 text-text-primary backdrop-blur-sm">
+                <option value="university_member">University Student</option>
+                <option value="administrator">Parking Administrator</option>
+              </select>
+            </div>
+            @if (hasError('role')) {
+            <p class="text-red-500 text-xs mt-1 font-bold">
+              {{ getErrorMessage('role') }}
+            </p>
+            }
           </div>
-          <!-- Mensaje de error -->
-          @if (hasError('password')) {
-            <p class="text-red-500 text-xs mt-1">
+
+          <!-- Campo Contraseña -->
+          <div>
+            <label for="password" class="block text-text-primary font-semibold text-sm mb-2">
+              Password
+            </label>
+            <div class="relative">
+              <input id="password" [type]="showPassword ? 'text' : 'password'" formControlName="password"
+                placeholder="Enter your password"
+                class="w-full px-4 py-3 pr-12 bg-white/5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-button-primary focus:border-transparent transition-all duration-200 text-text-primary placeholder-text-muted backdrop-blur-sm"
+                [class.border-red-500]="hasError('password')" [class.focus:ring-red-500]="hasError('password')">
+              <button type="button" (click)="togglePasswordVisibility()"
+                class="absolute inset-y-0 right-0 pr-3 flex items-center text-text-muted hover:text-text-primary transition-colors duration-200">
+                @if (showPassword) {
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21">
+                  </path>
+                </svg>
+                } @else {
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                  </path>
+                </svg>
+                }
+              </button>
+            </div>
+            @if (hasError('password')) {
+            <p class="text-red-500 text-xs mt-1 font-bold">
               {{ getErrorMessage('password') }}
             </p>
-          }
-        </div>
-
-        <!-- Campo Confirmar Contraseña -->
-        <div>
-          <label for="confirmPassword" class="block text-text-primary font-semibold text-sm mb-2">
-            Confirm Password
-          </label>
-          <div class="relative">
-            <input
-              id="confirmPassword"
-              [type]="showConfirmPassword ? 'text' : 'password'"
-              formControlName="confirmPassword"
-              placeholder="Enter your password"
-              class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-button-primary focus:border-transparent transition-all duration-200 text-text-primary placeholder-text-muted"
-              [class.border-red-500]="hasError('confirmPassword') || hasPasswordMismatchError()"
-              [class.focus:ring-red-500]="hasError('confirmPassword') || hasPasswordMismatchError()"
-            >
-            <!-- Botón para mostrar/ocultar confirmación de contraseña -->
-            <button
-              type="button"
-              (click)="toggleConfirmPasswordVisibility()"
-              class="absolute inset-y-0 right-0 pr-3 flex items-center text-text-muted hover:text-text-primary transition-colors duration-200"
-            >
-              @if (showConfirmPassword) {
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
-                </svg>
-              } @else {
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                </svg>
-              }
-            </button>
+            }
           </div>
-          <!-- Mensaje de error -->
-          @if (hasError('confirmPassword')) {
-            <p class="text-red-500 text-xs mt-1">
+
+          <!-- Campo Confirmar Contraseña -->
+          <div>
+            <label for="confirmPassword" class="block text-text-primary font-semibold text-sm mb-2">
+              Confirm Password
+            </label>
+            <div class="relative">
+              <input id="confirmPassword" [type]="showConfirmPassword ? 'text' : 'password'"
+                formControlName="confirmPassword" placeholder="Confirm your password"
+                class="w-full px-4 py-3 pr-12 bg-white/5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-button-primary focus:border-transparent transition-all duration-200 text-text-primary placeholder-text-muted backdrop-blur-sm"
+                [class.border-red-500]="hasError('confirmPassword') || hasPasswordMismatchError()"
+                [class.focus:ring-red-500]="hasError('confirmPassword') || hasPasswordMismatchError()">
+              <button type="button" (click)="toggleConfirmPasswordVisibility()"
+                class="absolute inset-y-0 right-0 pr-3 flex items-center text-text-muted hover:text-text-primary transition-colors duration-200">
+                @if (showConfirmPassword) {
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21">
+                  </path>
+                </svg>
+                } @else {
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                  </path>
+                </svg>
+                }
+              </button>
+            </div>
+            @if (hasError('confirmPassword')) {
+            <p class="text-red-500 text-xs mt-1 font-bold">
               {{ getErrorMessage('confirmPassword') }}
             </p>
-          }
-          @if (hasPasswordMismatchError()) {
-            <p class="text-red-500 text-xs mt-1">
-              Las contraseñas no coinciden
+            }
+            @if (hasPasswordMismatchError()) {
+            <p class="text-red-500 text-xs mt-1 font-bold">
+              Passwords do not match
             </p>
-          }
-        </div>
+            }
+          </div>
 
-        <!-- Checkbox Términos y Condiciones -->
-        <div>
-          <label class="flex items-start">
-            <input
-              type="checkbox"
-              formControlName="acceptTerms"
-              class="w-4 h-4 text-button-primary bg-background-primary border-gray-300 rounded focus:ring-button-primary focus:ring-2 mt-1"
-            >
-            <span class="ml-2 text-text-primary text-sm">
-              Accept
-              <a
-                href="#"
-                class="text-button-primary hover:text-button-primary/80 underline transition-colors duration-200"
-              >
-                Terms & Conditions
-              </a>
-            </span>
-          </label>
-          <!-- Mensaje de error -->
-          @if (hasError('acceptTerms')) {
-            <p class="text-red-500 text-xs mt-1">
+          <!-- Checkbox Términos y Condiciones -->
+          <div>
+            <label class="flex items-start">
+              <input type="checkbox" formControlName="acceptTerms"
+                class="w-4 h-4 text-button-primary bg-white/50 border-gray-300 rounded focus:ring-button-primary focus:ring-2 mt-1">
+              <span class="ml-2 text-text-primary text-sm font-medium">
+                I accept the <a href="#"
+                  class="text-button-primary hover:text-button-primary/80 font-bold transition-colors duration-200">Terms
+                  & Conditions</a>
+              </span>
+            </label>
+            @if (hasError('acceptTerms')) {
+            <p class="text-red-500 text-xs mt-1 font-bold">
               {{ getErrorMessage('acceptTerms') }}
             </p>
-          }
+            }
+          </div>
+
+          <!-- Botón de envío -->
+          <button type="submit" [disabled]="isLoading"
+            class="w-full bg-button-primary text-text-white font-bold py-3 px-4 rounded-lg hover:bg-button-primary/90 focus:ring-2 focus:ring-button-primary focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0">
+            @if (isLoading) {
+            <div class="flex items-center justify-center">
+              <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                </path>
+              </svg>
+              Creating Account...
+            </div>
+            } @else {
+            Sign Up
+            }
+          </button>
+
+        </form>
+
+        <!-- Footer -->
+        <div class="mt-8 text-center">
+          <p class="text-text-primary text-sm font-medium">
+            Already have an account?
+            <a routerLink="/login"
+              class="text-button-primary hover:text-button-primary/80 font-bold transition-colors duration-200">
+              Sign In
+            </a>
+          </p>
         </div>
 
-        <!-- Botón de envío -->
-        <button
-          type="submit"
-          [disabled]="isLoading"
-          class="w-full bg-button-primary text-text-white font-semibold py-3 px-4 rounded-lg hover:bg-button-primary/90 focus:ring-2 focus:ring-button-primary focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          @if (isLoading) {
-            <div class="flex items-center justify-center">
-              <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              Creating account...
-            </div>
-          } @else {
-            Sign In
-          }
-        </button>
-
-      </form>
-
-      <!-- Footer -->
-      <div class="mt-8 text-center">
-        <p class="text-text-primary text-sm">
-          Already have an account?
-          <a
-            routerLink="/login"
-            class="text-button-primary hover:text-button-primary/80 font-medium transition-colors duration-200"
-          >
-            Sign In
-          </a>
-        </p>
       </div>
-
     </div>
   </div>
 </div>
