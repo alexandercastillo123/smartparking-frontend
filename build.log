@@ -1,0 +1,151 @@
+
+> smartparking-frontend@0.0.0 start
+> ng serve --proxy-config proxy.conf.json
+
+- Building...
+
+Browser bundles        
+Initial chunk files     | Names                              |  Raw size
+main.js                 | main                               | 135.19 kB | 
+chunk-GZW7KTH3.js       | -                                  |  93.74 kB | 
+polyfills.js            | polyfills                          |  88.09 kB | 
+styles.css              | styles                             |  72.47 kB | 
+chunk-QKZQUW6R.js       | -                                  |   5.71 kB | 
+chunk-SDNG3QLQ.js       | -                                  |   1.59 kB | 
+chunk-SHAOKUVO.js       | -                                  | 938 bytes | 
+chunk-7UYYAKMP.js       | -                                  | 324 bytes | 
+
+                        | Initial total                      | 398.03 kB
+
+Lazy chunk files        | Names                              |  Raw size
+chunk-SZMTOSML.js       | admin-reports-component            |  32.37 kB | 
+chunk-YWEMMPLV.js       | register-page                      |  25.48 kB | 
+chunk-XYGPYA4Y.js       | login-page                         |  18.66 kB | 
+chunk-V4HGWI6V.js       | password-recovery-newpassword-page |  18.54 kB | 
+chunk-U2DPA3BK.js       | password-recovery-page             |  13.92 kB | 
+chunk-6LUBWI6A.js       | student-dashboard-module           |   1.11 kB | 
+
+
+Server bundles         
+Initial chunk files     | Names                              |  Raw size
+chunk-WH4NQOQP.mjs      | -                                  |   1.07 MB | 
+chunk-EMGO5A4D.mjs      | -                                  | 663.58 kB | 
+polyfills.server.mjs    | polyfills.server                   | 559.49 kB | 
+chunk-XHZSQAXC.mjs      | -                                  | 202.80 kB | 
+chunk-B4JM4UII.mjs      | -                                  | 194.17 kB | 
+main.server.mjs         | main.server                        | 127.50 kB | 
+chunk-2RGQGKVO.mjs      | -                                  |  89.75 kB | 
+chunk-2DC2NB7K.mjs      | -                                  |   5.59 kB | 
+chunk-VPSODEBW.mjs      | -                                  |   2.51 kB | 
+chunk-QHL7N7EE.mjs      | -                                  |   1.58 kB | 
+render-utils.server.mjs | render-utils.server                | 462 bytes | 
+chunk-PUO37DNQ.mjs      | -                                  | 359 bytes | 
+
+Lazy chunk files        | Names                              |  Raw size
+chunk-P3UOPGAK.mjs      | xhr2                               |  39.09 kB | 
+chunk-NLVS5X5A.mjs      | admin-reports-component            |  32.02 kB | 
+chunk-PKAXBU3W.mjs      | register-page                      |  25.07 kB | 
+chunk-V4NJVLXZ.mjs      | login-page                         |  18.49 kB | 
+chunk-2HW3JQM6.mjs      | password-recovery-newpassword-page |  18.32 kB | 
+chunk-OVEQISMO.mjs      | password-recovery-page             |  13.84 kB | 
+chunk-HQNYHDN5.mjs      | student-dashboard-module           |   1.13 kB | 
+
+Application bundle generation complete. [4.616 seconds]
+
+Watch mode enabled. Watching for file changes...
+  Ô×£  Local:   http://localhost:4200/
+  Ô×£  press h + enter to show help
+NG02801: Angular detected that `HttpClient` is not configured to use `fetch` APIs. It's strongly recommended to enable `fetch` for applications that use Server-Side Rendering for better performance and compatibility. To enable `fetch`, add the `withFetch()` to the `provideHttpClient()` call at the root of the application.
+- Changes detected. Rebuilding...
+
+Initial chunk files | Names      |  Raw size
+main.js             | main       | 135.19 kB | 
+
+Lazy chunk files    | Names      |  Raw size
+chunk-MTNWFZWJ.js   | login-page |  18.64 kB | 
+
+Application bundle generation complete. [0.784 seconds]
+
+Page reload sent to client(s).
+- Changes detected. Rebuilding...
+
+Application bundle generation failed. [0.321 seconds]
+
+X [ERROR] TS2304: Cannot find name 'withFetch'. [plugin angular-compiler]
+
+    src/app/app.config.ts:14:69:
+      14 Ôöé ...lient(withInterceptors([authenticationInterceptor]), withFetch()),
+         ÔòÁ                                                         ~~~~~~~~~
+
+
+- Changes detected. Rebuilding...
+
+Browser bundles        
+Initial chunk files     | Names                              |  Raw size
+main.js                 | main                               | 135.21 kB | 
+chunk-GZW7KTH3.js       | -                                  |  93.74 kB | 
+polyfills.js            | polyfills                          |  88.09 kB | 
+styles.css              | styles                             |  72.47 kB | 
+chunk-QKZQUW6R.js       | -                                  |   5.71 kB | 
+chunk-SDNG3QLQ.js       | -                                  |   1.59 kB | 
+chunk-SHAOKUVO.js       | -                                  | 938 bytes | 
+chunk-7UYYAKMP.js       | -                                  | 324 bytes | 
+
+                        | Initial total                      | 398.05 kB
+
+Lazy chunk files        | Names                              |  Raw size
+chunk-SZMTOSML.js       | admin-reports-component            |  32.37 kB | 
+chunk-YWEMMPLV.js       | register-page                      |  25.48 kB | 
+chunk-MTNWFZWJ.js       | login-page                         |  18.64 kB | 
+chunk-V4HGWI6V.js       | password-recovery-newpassword-page |  18.54 kB | 
+chunk-U2DPA3BK.js       | password-recovery-page             |  13.92 kB | 
+chunk-6LUBWI6A.js       | student-dashboard-module           |   1.11 kB | 
+
+
+Server bundles         
+Initial chunk files     | Names                              |  Raw size
+chunk-VLAYAKHD.mjs      | -                                  |   1.07 MB | 
+chunk-JBURAG6T.mjs      | -                                  | 663.58 kB | 
+polyfills.server.mjs    | polyfills.server                   | 559.49 kB | 
+chunk-A5XG6XL3.mjs      | -                                  | 202.80 kB | 
+chunk-5GI5SA7K.mjs      | -                                  | 194.17 kB | 
+main.server.mjs         | main.server                        | 127.53 kB | 
+chunk-QBTR2XHY.mjs      | -                                  |  89.75 kB | 
+chunk-7OM7AXNZ.mjs      | -                                  |   5.59 kB | 
+chunk-VPSODEBW.mjs      | -                                  |   2.51 kB | 
+chunk-IDDJVRKN.mjs      | -                                  |   1.58 kB | 
+render-utils.server.mjs | render-utils.server                | 462 bytes | 
+chunk-PUO37DNQ.mjs      | -                                  | 359 bytes | 
+
+Lazy chunk files        | Names                              |  Raw size
+chunk-P3UOPGAK.mjs      | xhr2                               |  39.09 kB | 
+chunk-3IVISLVV.mjs      | admin-reports-component            |  32.02 kB | 
+chunk-UMONT7HE.mjs      | register-page                      |  25.07 kB | 
+chunk-LRGNIBZ6.mjs      | login-page                         |  18.48 kB | 
+chunk-V3PEHJZW.mjs      | password-recovery-newpassword-page |  18.32 kB | 
+chunk-V6YKJJ3G.mjs      | password-recovery-page             |  13.84 kB | 
+chunk-KKPWM7T2.mjs      | student-dashboard-module           |   1.13 kB | 
+
+Application bundle generation complete. [0.341 seconds]
+
+Page reload sent to client(s).
+- Changes detected. Rebuilding...
+
+Browser bundles    
+Initial chunk files | Names       |  Raw size
+main.js             | main        | 135.21 kB | 
+
+Lazy chunk files    | Names       |  Raw size
+chunk-USTJQWOM.js   | login-page  |  18.66 kB | 
+
+
+Server bundles     
+Initial chunk files | Names       |  Raw size
+main.server.mjs     | main.server | 127.53 kB | 
+
+Lazy chunk files    | Names       |  Raw size
+chunk-72QR7J32.mjs  | login-page  |  18.49 kB | 
+
+Application bundle generation complete. [0.313 seconds]
+
+Page reload sent to client(s).

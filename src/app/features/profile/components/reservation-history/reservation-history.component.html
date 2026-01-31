@@ -1,0 +1,140 @@
+<div class="min-h-screen bg-slate-50/50 py-10 px-6 sm:px-8 lg:px-12 animate-fade-in custom-scrollbar">
+  <div class="max-w-[1600px] mx-auto space-y-12">
+
+    <!-- SECCIÓN DE RESERVA ACTIVA (Prominente) -->
+    @if (hasActiveReservation() || hasActiveSession()) {
+    <div class="space-y-6">
+      <div class="flex items-center gap-3 ml-2">
+        <div class="w-3 h-3 bg-green-500 rounded-full animate-ping"></div>
+        <h2 class="text-xl font-black text-gray-800 tracking-tighter uppercase">Proceso en Curso</h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Tarjeta Detallada -->
+        <div class="lg:col-span-2">
+          @if (hasActiveReservation() && !hasActiveSession()) {
+          <app-active-reservation-card></app-active-reservation-card>
+          }
+          @if (hasActiveSession()) {
+          <app-active-session-card></app-active-session-card>
+          }
+        </div>
+
+        <!-- Mensaje de Estado / Ayuda -->
+        <div
+          class="glass-card p-10 bg-green-600 text-white border-none shadow-xl shadow-green-200 flex flex-col justify-center transform hover:scale-[1.02] transition-all duration-300"
+          style="background-color: #16a34a !important;">
+          <h3 class="text-3xl font-black tracking-tighter mb-4">¡Reserva Activa!</h3>
+          <p class="text-green-100 font-medium leading-relaxed mb-8">
+            Tu espacio está asegurado. Utiliza los controles de la tarjeta para gestionar tu llegada o salida del
+            estacionamiento.
+          </p>
+          <div class="p-4 bg-white/10 rounded-2xl border border-white/20">
+            <span class="text-[10px] font-black uppercase tracking-widest block mb-1 text-white">Recordatorio</span>
+            <p class="text-xs">Recuerda finalizar tu sesión al salir para evitar cargos o penalidades.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- TABLA DE HISTORIAL -->
+    <div class="space-y-6">
+      <div class="flex items-center justify-between ml-2">
+        <h2 class="text-xl font-black text-gray-800 tracking-tighter uppercase">Historial de Actividad</h2>
+        <span
+          class="px-4 py-2 bg-white rounded-full text-[10px] font-black text-gray-400 border border-gray-100 shadow-sm uppercase tracking-widest">
+          {{ reservations.length }} Registros
+        </span>
+      </div>
+
+      <div class="glass-card overflow-hidden border-white/60">
+        <!-- Tabla -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left">
+            <thead class="bg-gray-50/50 border-b border-gray-100">
+              <tr>
+                <th class="px-8 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Espacio</th>
+                <th class="px-8 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Fecha</th>
+                <th class="px-8 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Hora Inicio</th>
+                <th class="px-8 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Hora Fin</th>
+                <th class="px-8 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Duración</th>
+                <th class="px-8 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] text-right">Estado
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100/50">
+              @for (res of paginatedReservations; track res.reservationId) {
+              <tr class="hover:bg-white/40 transition-colors group">
+                <td class="px-8 py-6">
+                  <span class="text-sm font-black text-gray-800 tracking-tight">#{{ res.spaceCode }}</span>
+                </td>
+                <td class="px-8 py-6 text-sm font-bold text-gray-500">
+                  {{ res.date | date:'mediumDate' }}
+                </td>
+                <td class="px-8 py-6 text-sm font-medium text-gray-400">
+                  {{ res.startTime | date:'shortTime' }}
+                </td>
+                <td class="px-8 py-6 text-sm font-medium text-gray-400">
+                  {{ res.endTime ? (res.endTime | date:'shortTime') : '-' }}
+                </td>
+                <td class="px-8 py-6 text-sm font-semibold text-gray-700">
+                  {{ calculateDuration(res) }}
+                </td>
+                <td class="px-8 py-6 text-right">
+                  <span [ngClass]="{
+                      'bg-green-50 text-green-600': res.status === 'completed',
+                      'bg-red-50 text-red-600': res.status === 'cancelled',
+                      'bg-blue-50 text-blue-600': res.status === 'active'
+                    }" class="px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider inline-block">
+                    {{ res.status }}
+                  </span>
+                </td>
+              </tr>
+              }
+              @if (reservations.length === 0) {
+              <tr>
+                <td colspan="6" class="py-20 text-center">
+                  <div class="flex flex-col items-center gap-4 opacity-30">
+                    <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                    <p class="text-sm font-black uppercase tracking-widest text-gray-500">Sin registros previos</p>
+                  </div>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Paginación Premium -->
+        @if (totalPages > 1) {
+        <div class="px-8 py-8 border-t border-gray-100 flex items-center justify-between">
+          <button (click)="previousPage()" [disabled]="currentPage === 1"
+            class="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-500 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all disabled:opacity-30">
+            Anterior
+          </button>
+
+          <div class="flex gap-2">
+            @for (page of visiblePages; track $index) {
+            <button (click)="page !== '...' ? goToPage(+page) : null" [ngClass]="{
+                    'bg-gray-900 text-white shadow-xl shadow-gray-200': currentPage === page,
+                    'hover:bg-gray-50 text-gray-400': currentPage !== page && page !== '...'
+                  }" class="w-10 h-10 rounded-xl text-[10px] font-black transition-all">
+              {{ page }}
+            </button>
+            }
+          </div>
+
+          <button (click)="nextPage()" [disabled]="currentPage === totalPages"
+            class="px-6 py-3 bg-gray-900 hover:bg-black text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-lg hover:shadow-xl disabled:opacity-30">
+            Siguiente
+          </button>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

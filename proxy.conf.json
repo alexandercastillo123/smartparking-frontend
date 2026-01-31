@@ -1,0 +1,8 @@
+{
+    "/api": {
+        "target": "https://bizarre-edithe-codalex-a518ab48.koyeb.app",
+        "secure": true,
+        "changeOrigin": true,
+        "logLevel": "debug"
+    }
+}

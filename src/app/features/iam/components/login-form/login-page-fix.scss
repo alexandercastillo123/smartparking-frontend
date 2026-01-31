@@ -1,0 +1,15 @@
+/* Asegurar que html y body ocupen el 100% sin márgenes */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+/* Forzar fondo oscuro en la página de login */
+body:has(app-login) {
+    background: #1e293b !important;
+    overflow: hidden;
+}

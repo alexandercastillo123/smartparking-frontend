@@ -1,0 +1,289 @@
+<div class="p-8 md:p-12 space-y-12 animate-fade-in custom-scrollbar">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div>
+            <h2 class="text-4xl font-black text-gray-800 tracking-tighter">Reportes & Métricas</h2>
+            <div class="flex items-center gap-3 mt-2">
+                <p class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em]">Análisis de rendimiento del
+                    sistema</p>
+                @if (userFilter) {
+                <div
+                    class="flex items-center gap-2 px-3 py-1 bg-blue-600 text-white rounded-full text-[10px] font-black uppercase tracking-widest animate-fade-in">
+                    <span>Usuario: {{userFilter}}</span>
+                    <button (click)="userFilter = null; filterData(selectedPeriod)" class="hover:text-blue-200">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                }
+            </div>
+        </div>
+
+        <!-- Period Selector -->
+        <div class="flex bg-white/50 backdrop-blur-md p-1.5 rounded-2xl border border-white/60 shadow-sm self-start">
+            <button (click)="filterData('today')"
+                [ngClass]="{'bg-gray-900 text-white shadow-lg': selectedPeriod === 'today', 'text-gray-500 hover:bg-white/50': selectedPeriod !== 'today'}"
+                class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300">Hoy</button>
+            <button (click)="filterData('week')"
+                [ngClass]="{'bg-gray-900 text-white shadow-lg': selectedPeriod === 'week', 'text-gray-500 hover:bg-white/50': selectedPeriod !== 'week'}"
+                class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300">Semana</button>
+            <button (click)="filterData('month')"
+                [ngClass]="{'bg-gray-900 text-white shadow-lg': selectedPeriod === 'month', 'text-gray-500 hover:bg-white/50': selectedPeriod !== 'month'}"
+                class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300">Mes</button>
+            <button (click)="filterData('all')"
+                [ngClass]="{'bg-gray-900 text-white shadow-lg': selectedPeriod === 'all', 'text-gray-500 hover:bg-white/50': selectedPeriod !== 'all'}"
+                class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300">Todo</button>
+        </div>
+    </div>
+
+    <!-- Main Metrics Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        <!-- Volumen de Reservas & Gráfico / MEJORADO INTERACTIVO REAL -->
+        <div
+            class="lg:col-span-2 glass-card p-10 bg-white border-white/40 shadow-xl group transition-all duration-500 overflow-hidden relative">
+            <div class="flex justify-between items-start mb-8 relative z-10">
+                <div>
+                    <span class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Volumen de
+                        Reservas</span>
+                    <div class="text-6xl font-black mt-2 tracking-tighter text-gray-800">{{metrics.total}}</div>
+                    <p class="text-sm font-bold text-blue-600 mt-2 tracking-wide lowercase">reservas registradas
+                        {{getPeriodLabel(selectedPeriod)}}</p>
+                </div>
+                <!-- Gráfico de barras interactivo con DATOS REALES -->
+                <div class="flex items-end gap-6 h-64 pt-10 flex-1 justify-end max-w-2xl px-4">
+                    @for (day of chartData; track day.label) {
+                    <div class="group/bar relative flex flex-col items-center flex-1 max-w-[80px]">
+                        <div
+                            class="absolute -top-10 bg-gray-900 text-white text-[12px] px-3 py-1.5 rounded-lg opacity-0 group-hover/bar:opacity-100 transition-opacity whitespace-nowrap font-black z-20 shadow-xl">
+                            {{day.label}}: {{day.value}}
+                        </div>
+                        <div class="w-full bg-blue-100/50 rounded-t-2xl group-hover/bar:bg-blue-600 group-hover/bar:shadow-[0_0_25px_rgba(37,99,235,0.4)] transition-all duration-500 cursor-pointer"
+                            [class.bg-blue-600]="day.label === 'Hoy'" [style.height.px]="day.height"></div>
+                        <span
+                            class="text-[10px] font-black text-gray-400 mt-3 uppercase tracking-widest">{{day.label}}</span>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Breakdown / MEJORADO INTERACTIVO -->
+        <div class="glass-card p-8 bg-white flex flex-col hover:shadow-2xl transition-all duration-500 border-white/60">
+            <h3 class="text-xs font-black text-gray-400 uppercase tracking-widest mb-8">Desglose de Estados</h3>
+            <div class="space-y-6 flex-1">
+                <div class="flex items-center justify-between group/status">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-2.5 h-2.5 bg-emerald-500 rounded-full shadow-[0_0_10px_rgba(16,185,129,0.3)] group-hover/status:scale-150 transition-transform">
+                        </div>
+                        <span
+                            class="text-sm font-bold text-gray-600 group-hover/status:text-emerald-600 transition-colors">Completadas</span>
+                    </div>
+                    <div class="flex flex-col items-end">
+                        <span class="text-lg font-black text-gray-900">{{metrics.completed}}</span>
+                        <div class="flex items-center gap-1">
+                            <div class="w-1 h-1 bg-emerald-500 rounded-full"></div>
+                            <span class="text-[10px] font-black text-emerald-500 uppercase">{{(metrics.completed /
+                                (metrics.total || 1) * 100) | number:'1.0-0'}}%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between group/status">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-2.5 h-2.5 bg-rose-500 rounded-full shadow-[0_0_10px_rgba(244,63,94,0.3)] group-hover/status:scale-150 transition-transform">
+                        </div>
+                        <span
+                            class="text-sm font-bold text-gray-600 group-hover/status:text-rose-600 transition-colors">Canceladas</span>
+                    </div>
+                    <div class="flex flex-col items-end">
+                        <span class="text-lg font-black text-gray-900">{{metrics.cancelled}}</span>
+                        <div class="flex items-center gap-1">
+                            <div class="w-1 h-1 bg-rose-500 rounded-full"></div>
+                            <span class="text-[10px] font-black text-rose-500 uppercase">{{(metrics.cancelled /
+                                (metrics.total || 1) * 100) | number:'1.0-0'}}%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between group/status">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-2.5 h-2.5 bg-amber-500 rounded-full shadow-[0_0_10px_rgba(245,158,11,0.3)] group-hover/status:scale-150 transition-transform">
+                        </div>
+                        <span
+                            class="text-sm font-bold text-gray-600 group-hover/status:text-amber-600 transition-colors">Ausencias</span>
+                    </div>
+                    <div class="flex flex-col items-end">
+                        <span class="text-lg font-black text-gray-900">{{metrics.absences}}</span>
+                        <div class="flex items-center gap-1">
+                            <div class="w-1 h-1 bg-amber-500 rounded-full"></div>
+                            <span class="text-[10px] font-black text-amber-500 uppercase">{{(metrics.absences /
+                                (metrics.total || 1) * 100) | number:'1.0-0'}}%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resumen Informativo (Consolidado) -->
+            <div class="mt-8 pt-8 border-t border-gray-50">
+                <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest leading-relaxed">
+                    Eficiencia basada en <span class="text-blue-600">{{metrics.total}}</span> registros procesados
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Secondary Metrics / Time Only -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div
+            class="glass-card p-10 border-l-8 border-indigo-600 flex items-center justify-between bg-white shadow-xl hover:shadow-indigo-100 transition-all duration-500 group">
+            <div>
+                <h4 class="text-[11px] font-black text-gray-400 uppercase tracking-[0.2em] mb-2">Promedio de Estancia
+                </h4>
+                <div
+                    class="text-5xl font-black text-gray-800 tracking-tighter group-hover:text-indigo-600 transition-colors">
+                    {{metrics.avgDuration}}</div>
+                <p class="text-xs font-bold text-indigo-500 mt-2 uppercase tracking-widest">Tiempo de uso efectivo</p>
+            </div>
+            <div
+                class="p-6 bg-indigo-50 text-indigo-600 rounded-[2.5rem] border border-indigo-100 group-hover:rotate-12 transition-transform shadow-lg shadow-indigo-100/50">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+        </div>
+
+        <div
+            class="glass-card p-10 border-l-8 border-sky-500 flex items-center justify-between bg-white shadow-xl hover:shadow-sky-100 transition-all duration-500 group">
+            <div>
+                <h4 class="text-[11px] font-black text-gray-400 uppercase tracking-[0.2em] mb-2">Tasa de Confirmación
+                </h4>
+                <div
+                    class="text-5xl font-black text-gray-800 tracking-tighter group-hover:text-sky-600 transition-colors">
+                    {{ (metrics.completed / (metrics.total || 1) * 100) | number:'1.0-1' }}%</div>
+                <p class="text-xs font-bold text-sky-500 mt-2 uppercase tracking-widest">Éxito de Reservas</p>
+            </div>
+            <div
+                class="p-6 bg-sky-50 text-sky-600 rounded-[2.5rem] border border-sky-100 group-hover:-rotate-12 transition-transform shadow-lg shadow-sky-100/50">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- Activity -->
+    <div class="space-y-8">
+        <div class="flex items-center justify-between ml-2">
+            <h3 class="text-3xl font-black text-gray-800 tracking-tighter uppercase">Actividad</h3>
+            <span
+                class="px-5 py-2 bg-blue-600 rounded-xl text-[10px] font-black text-white shadow-xl shadow-blue-200 uppercase tracking-[0.2em]">
+                {{filteredHistory.length}} Registros
+            </span>
+        </div>
+
+        <div class="glass-card overflow-hidden border-white/60 bg-white/40 shadow-2xl">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-blue-600 border-b border-blue-700">
+                        <tr>
+                            <th class="px-8 py-6 text-[10px] font-black text-white uppercase tracking-[0.3em]">Espacio
+                            </th>
+                            <th class="px-8 py-6 text-[10px] font-black text-white uppercase tracking-[0.3em]">Usuario
+                            </th>
+                            <th class="px-8 py-6 text-[10px] font-black text-white uppercase tracking-[0.3em]">Fecha /
+                                Hora</th>
+                            <th class="px-8 py-6 text-[10px] font-black text-white uppercase tracking-[0.3em]">Estado
+                            </th>
+                            <th
+                                class="px-8 py-6 text-[10px] font-black text-white uppercase tracking-[0.3em] text-right">
+                                Duración</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100/50 bg-white/60">
+                        @for (res of filteredHistory; track res.reservationId) {
+                        <tr class="hover:bg-blue-50/50 transition-all duration-300 group">
+                            <td class="px-8 py-8">
+                                <span
+                                    class="text-sm font-black text-gray-800 tracking-tight bg-white border border-gray-100 px-4 py-2 rounded-2xl shadow-sm group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-700 transition-all">#{{res.spaceCode}}</span>
+                            </td>
+                            <td class="px-8 py-8">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-10 h-10 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 font-black text-xs group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                                        {{(res.userName || res.userEmail || 'D').substring(0,1).toUpperCase()}}
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span
+                                            class="text-sm font-black text-gray-800 group-hover:text-blue-600 transition-colors">{{res.userName
+                                            || res.userEmail}}</span>
+                                        <span *ngIf="res.userName"
+                                            class="text-[9px] font-black text-gray-400 uppercase tracking-widest mt-0.5">{{res.userEmail}}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-8 py-8">
+                                <div class="flex flex-col">
+                                    <span class="text-sm font-bold text-gray-800">{{res.startTime |
+                                        date:'mediumDate'}}</span>
+                                    <span
+                                        class="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-0.5">{{res.startTime
+                                        | date:'shortTime'}}</span>
+                                </div>
+                            </td>
+                            <td class="px-8 py-8">
+                                <span
+                                    class="px-4 py-2 rounded-2xl text-[9px] font-black uppercase tracking-widest border"
+                                    [ngClass]="{
+                                    'bg-emerald-50 text-emerald-600 border-emerald-100': res.status === 'completed',
+                                    'bg-blue-50 text-blue-600 border-blue-100': res.status === 'active',
+                                    'bg-rose-50 text-rose-600 border-rose-100': res.status === 'cancelled',
+                                    'bg-amber-50 text-amber-600 border-amber-100': res.status === 'expired' || res.status === 'pending'
+                                }">
+                                    {{res.status === 'expired' ? 'AUSENCIA' : res.status}}
+                                </span>
+                            </td>
+                            <td class="px-8 py-8 text-right">
+                                @if (res.status === 'completed') {
+                                <div class="flex flex-col items-end">
+                                    <span
+                                        class="text-sm font-black text-gray-800 tracking-tight">{{calculateDuration(res)}}</span>
+                                    <span
+                                        class="text-[8px] font-black text-gray-400 uppercase tracking-widest">Estancia</span>
+                                </div>
+                                } @else {
+                                <span class="text-gray-300">--</span>
+                                }
+                            </td>
+                        </tr>
+                        } @empty {
+                        <tr>
+                            <td colspan="5" class="px-8 py-20 text-center">
+                                <div class="flex flex-col items-center gap-4">
+                                    <div class="p-6 bg-gray-50 rounded-[3rem] text-gray-400 animate-pulse">
+                                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-lg font-black text-gray-800 tracking-tighter">Sin registros de
+                                            actividad</p>
+                                        <p class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mt-1">
+                                            Intente cambiar el periodo de tiempo</p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

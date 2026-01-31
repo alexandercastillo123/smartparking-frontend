@@ -1,0 +1,20 @@
+
+> smartparking-frontend@0.0.0 start
+> ng serve
+
+An unhandled exception occurred: Cannot find module '../../scheduler/performanceTimestampProvider'
+Require stack:
+- C:\Users\ALEXANDER\Desktop\smartparking-frontend\node_modules\@angular-devkit\build-angular\node_modules\rxjs\dist\cjs\internal\observable\dom\animationFrames.js
+- C:\Users\ALEXANDER\Desktop\smartparking-frontend\node_modules\@angular-devkit\build-angular\node_modules\rxjs\dist\cjs\index.js
+- C:\Users\ALEXANDER\Desktop\smartparking-frontend\node_modules\@angular-devkit\build-angular\src\builders\dev-server\builder.js
+- C:\Users\ALEXANDER\Desktop\smartparking-frontend\node_modules\@angular-devkit\build-angular\src\builders\dev-server\index.js
+- C:\Users\ALEXANDER\Desktop\smartparking-frontend\node_modules\@angular-devkit\architect\node\node-modules-architect-host.js
+- C:\Users\ALEXANDER\Desktop\smartparking-frontend\node_modules\@angular-devkit\architect\node\index.js
+- C:\Users\ALEXANDER\Desktop\smartparking-frontend\node_modules\@angular\cli\src\command-builder\architect-base-command-module.js
+- C:\Users\ALEXANDER\Desktop\smartparking-frontend\node_modules\@angular\cli\src\command-builder\architect-command-module.js
+- C:\Users\ALEXANDER\Desktop\smartparking-frontend\node_modules\@angular\cli\src\commands\serve\cli.js
+- C:\Users\ALEXANDER\Desktop\smartparking-frontend\node_modules\@angular\cli\src\commands\command-config.js
+- C:\Users\ALEXANDER\Desktop\smartparking-frontend\node_modules\@angular\cli\src\command-builder\command-runner.js
+- C:\Users\ALEXANDER\Desktop\smartparking-frontend\node_modules\@angular\cli\lib\cli\index.js
+- C:\Users\ALEXANDER\Desktop\smartparking-frontend\node_modules\@angular\cli\lib\init.js
+See "C:\Users\ALEXAN~1\AppData\Local\Temp\ng-4masq9\angular-errors.log" for further details.

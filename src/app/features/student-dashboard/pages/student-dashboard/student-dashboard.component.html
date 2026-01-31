@@ -1,0 +1,72 @@
+<div class="min-h-screen bg-[#f8fafc]">
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Active Reservation or Session -->
+        <div *ngIf="activeReservation && activeReservation.status !== 'active'" class="mb-8">
+            <app-active-reservation [reservation]="activeReservation" (onCancel)="handleCancelReservation($event)"
+                (onSimulateArrival)="handleSimulateArrival($event)">
+            </app-active-reservation>
+        </div>
+
+        <div *ngIf="activeReservation && activeReservation.status === 'active'" class="mb-8">
+            <app-active-session [reservation]="activeReservation"
+                (onSimulateDeparture)="handleSimulateDeparture($event)">
+            </app-active-session>
+        </div>
+
+        <!-- Top Grid: Espacios de Estacionamiento y Ausencias -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+            <!-- Available Spaces - 2/3 width -->
+            <div class="lg:col-span-2">
+                <app-available-spaces [spaces]="parkingSpaces" [hasActiveReservation]="!!activeReservation"
+                    (onReserve)="openReservationModal()">
+                </app-available-spaces>
+            </div>
+
+            <!-- Absence Counter - 1/3 width -->
+            <div>
+                <app-absence-counter [counter]="absenceCounter" [loading]="loadingAbsence">
+                </app-absence-counter>
+            </div>
+        </div>
+
+        <!-- Session History - Full Width -->
+        <div class="mb-6">
+            <app-session-history [history]="reservationHistory" [loading]="loadingHistory">
+            </app-session-history>
+        </div>
+
+        <!-- Statistics - Full Width -->
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-bold uppercase text-gray-900">Estadísticas</h3>
+                <div class="bg-blue-600 p-2 rounded-xl text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2" />
+                    </svg>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="text-center p-4 bg-gray-50 rounded-xl">
+                    <p class="text-sm font-semibold text-gray-600 uppercase mb-2">Total Reservas</p>
+                    <p class="text-4xl font-black text-blue-600">{{ totalReservations }}</p>
+                </div>
+                <div class="text-center p-4 bg-gray-50 rounded-xl">
+                    <p class="text-sm font-semibold text-gray-600 uppercase mb-2">Sesiones</p>
+                    <p class="text-4xl font-black text-emerald-500">{{ completedSessions }}</p>
+                </div>
+                <div class="text-center p-4 bg-gray-50 rounded-xl">
+                    <p class="text-sm font-semibold text-gray-600 uppercase mb-2">Tiempo Total</p>
+                    <p class="text-4xl font-black text-gray-900">{{ totalTime }}</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Reservation Modal -->
+    <app-reservation-modal *ngIf="showReservationModal" [spaces]="availableSpaces" (onClose)="closeReservationModal()"
+        (onConfirm)="handleCreateReservation($event)">
+    </app-reservation-modal>
+</div>

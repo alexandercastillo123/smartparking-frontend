@@ -1,0 +1,119 @@
+<div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center space-x-3">
+            <div class="bg-blue-600 p-2.5 rounded-xl shadow-md">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900">Espacios de Estacionamiento</h2>
+                <p class="text-sm font-medium text-gray-500 mt-0.5">{{ availableCount }} disponibles de {{ totalCount }}
+                    totales</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="mb-6 flex flex-wrap gap-2.5">
+        <button (click)="setFilter('all')" [class]="selectedFilter === 'all' 
+                ? 'bg-blue-600 text-white shadow-md' 
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+            class="px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200">
+            Todos ({{ totalCount }})
+        </button>
+
+        <button (click)="setFilter('available')" [class]="selectedFilter === 'available' 
+                ? 'bg-emerald-500 text-white shadow-md' 
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+            class="px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200">
+            Disponible ({{ availableCount }})
+        </button>
+
+        <button (click)="setFilter('reserved')" [class]="selectedFilter === 'reserved' 
+                ? 'bg-amber-500 text-white shadow-md' 
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+            class="px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200">
+            Reservado ({{ reservedCount }})
+        </button>
+
+        <button (click)="setFilter('occupied')" [class]="selectedFilter === 'occupied' 
+                ? 'bg-rose-500 text-white shadow-md' 
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+            class="px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200">
+            Ocupado ({{ occupiedCount }})
+        </button>
+
+        <button (click)="setFilter('maintenance')" [class]="selectedFilter === 'maintenance' 
+                ? 'bg-gray-500 text-white shadow-md' 
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+            class="px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200">
+            Mantenimiento ({{ maintenanceCount }})
+        </button>
+    </div>
+
+    <!-- Parking Spaces Grid -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 mb-6 min-h-[200px]">
+        <div *ngFor="let space of filteredSpaces"
+            class="relative aspect-square rounded-xl border-2 transition-all duration-200 cursor-pointer group"
+            [ngClass]="{
+                'border-emerald-400 bg-emerald-50 hover:bg-emerald-100': space.status === 'available',
+                'border-amber-400 bg-amber-50 hover:bg-amber-100': space.status === 'reserved',
+                'border-rose-400 bg-rose-50 hover:bg-rose-100': space.status === 'occupied',
+                'border-gray-400 bg-gray-50 hover:bg-gray-100': space.status === 'maintenance'
+            }">
+
+            <!-- Space Code & Content -->
+            <div class="absolute inset-0 flex flex-col items-center justify-center p-3">
+                <div class="text-xl md:text-2xl font-black tracking-tight mb-1.5 break-all text-center px-1" [ngClass]="{
+                    'text-emerald-700': space.status === 'available',
+                    'text-amber-700': space.status === 'reserved',
+                    'text-rose-700': space.status === 'occupied',
+                    'text-gray-700': space.status === 'maintenance'
+                }">
+                    {{ space.code }}
+                </div>
+
+                <!-- Status Badge -->
+                <div class="px-3 py-1 rounded-lg text-xs uppercase font-bold" [ngClass]="{
+                    'bg-emerald-500 text-white': space.status === 'available',
+                    'bg-amber-500 text-white': space.status === 'reserved',
+                    'bg-rose-500 text-white': space.status === 'occupied',
+                    'bg-gray-500 text-white': space.status === 'maintenance'
+                }">
+                    {{ getStatusLabel(space.status) }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="filteredSpaces.length === 0" class="col-span-full text-center py-12">
+            <svg class="w-16 h-16 mx-auto text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+            </svg>
+            <p class="text-gray-500 font-medium">No hay espacios con este estado</p>
+        </div>
+    </div>
+
+    <!-- Reserve Button -->
+    <button *ngIf="!hasActiveReservation" (click)="onReserve.emit()"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center space-x-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
+        </svg>
+        <span class="text-lg uppercase tracking-wide">Reservar Espacio</span>
+    </button>
+
+    <div *ngIf="hasActiveReservation"
+        class="w-full bg-gray-100 text-gray-600 font-semibold py-4 px-6 rounded-xl text-center border border-gray-300">
+        <svg class="w-5 h-5 inline-block mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                clip-rule="evenodd" />
+        </svg>
+        Ya tienes una reserva activa
+    </div>
+</div>

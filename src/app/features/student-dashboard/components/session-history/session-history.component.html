@@ -1,0 +1,83 @@
+<div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+    <div class="flex items-center justify-between mb-5">
+        <h3 class="text-xl font-bold text-gray-900 flex items-center">
+            <svg class="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Últimas Sesiones
+        </h3>
+    </div>
+
+    <div *ngIf="loading" class="flex items-center justify-center py-8">
+        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+    </div>
+
+    <div *ngIf="!loading && history && history.length > 0" class="space-y-3">
+        <div *ngFor="let session of getDisplayedSessions()"
+            class="border border-gray-200 rounded-xl p-4 hover:border-blue-300 hover:bg-blue-50/50 transition-all">
+            <div class="flex items-start justify-between mb-3">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 rounded-lg flex items-center justify-center text-white font-bold shadow-md"
+                        [ngClass]="{
+                        'bg-emerald-500': session.status === 'completed',
+                        'bg-rose-500': session.status === 'cancelled' || session.status === 'expired',
+                        'bg-gray-500': session.status !== 'completed' && session.status !== 'cancelled' && session.status !== 'expired'
+                    }">
+                        {{ session.spaceCode }}
+                    </div>
+                    <div>
+                        <p class="font-bold text-gray-900">{{ session.spaceCode }}</p>
+                        <p class="text-xs text-gray-500">{{ session.date | date:'short' }}</p>
+                    </div>
+                </div>
+                <span class="px-3 py-1 rounded-lg text-xs font-bold" [ngClass]="{
+                    'bg-emerald-100 text-emerald-700': session.status === 'completed',
+                    'bg-rose-100 text-rose-700': session.status === 'cancelled' || session.status === 'expired',
+                    'bg-gray-100 text-gray-700': session.status !== 'completed' && session.status !== 'cancelled' && session.status !== 'expired'
+                }">
+                    {{ getStatusLabel(session.status) }}
+                </span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 text-sm">
+                <div>
+                    <p class="text-xs text-gray-500 font-medium">Inicio</p>
+                    <p class="font-semibold text-gray-900">{{ session.startTime | date:'shortTime' }}</p>
+                </div>
+                <div *ngIf="session.endTime">
+                    <p class="text-xs text-gray-500 font-medium">Fin</p>
+                    <p class="font-semibold text-gray-900">{{ session.endTime | date:'shortTime' }}</p>
+                </div>
+                <div *ngIf="calculateDuration(session) as duration" class="col-span-2">
+                    <p class="text-xs text-gray-500 font-medium">Duración</p>
+                    <p class="font-semibold text-gray-900">{{ duration }}</p>
+                </div>
+            </div>
+
+            <div *ngIf="session.cancellationReason" class="mt-3 pt-3 border-t border-gray-200">
+                <p class="text-xs text-gray-500 font-medium">Razón de cancelación</p>
+                <p class="text-sm text-gray-700">{{ session.cancellationReason }}</p>
+            </div>
+        </div>
+
+        <!-- Show All Button -->
+        <button *ngIf="history.length > 2" routerLink="/history"
+            class="w-full mt-4 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center space-x-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+            <span>Mostrar Todo</span>
+        </button>
+    </div>
+
+    <div *ngIf="!loading && (!history || history.length === 0)" class="text-center py-12">
+        <svg class="w-16 h-16 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+        </svg>
+        <p class="text-gray-500 font-medium">No hay sesiones registradas</p>
+        <p class="text-sm text-gray-400 mt-1">Tus sesiones aparecerán aquí</p>
+    </div>
+</div>

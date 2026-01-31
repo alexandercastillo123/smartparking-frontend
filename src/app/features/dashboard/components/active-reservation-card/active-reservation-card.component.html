@@ -1,0 +1,74 @@
+<!-- Tarjeta de Reserva Activa -->
+@if (reservation(); as res) {
+<div
+  class="bg-white/40 backdrop-blur-lg rounded-2xl shadow-xl border border-white/30 p-8 transition-all duration-500 animate-fade-in">
+
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
+    <div class="text-center md:text-left">
+      <h2 class="text-3xl font-extrabold text-gray-800 mb-2">Espacio {{ res.spaceCode }}</h2>
+      <p class="text-gray-500 font-medium tracking-wide">RESERVA: {{ res.startTime | date:'shortTime' }}</p>
+    </div>
+
+    <!-- Alerta de tiempo dinámica -->
+    <div class="px-6 py-3 rounded-2xl flex items-center gap-3 shadow-sm transition-all duration-300" [ngClass]="{
+          'bg-blue-50/80 text-blue-700': !isWarning(),
+          'bg-red-50/80 text-red-700 animate-pulse': isWarning()
+        }">
+      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd"
+          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+          clip-rule="evenodd" />
+      </svg>
+      <span class="text-sm font-bold uppercase tracking-tight">
+        {{ alertMessage() }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Cuenta regresiva circular -->
+  <div class="flex justify-center mb-8">
+    <div class="relative w-56 h-56 group">
+      <!-- Círculo de fondo con efecto de brillo -->
+      <div
+        class="absolute inset-0 rounded-full bg-blue-500/5 blur-3xl group-hover:bg-blue-500/10 transition-all duration-700">
+      </div>
+
+      <svg class="w-full h-full transform -rotate-90">
+        <circle cx="112" cy="112" r="104" class="fill-none stroke-gray-100/50" stroke-width="12" />
+
+        <!-- Círculo de progreso -->
+        <circle cx="112" cy="112" r="104" class="fill-none transition-all duration-1000 ease-out" [ngClass]="{
+              'stroke-blue-600': !isWarning(),
+              'stroke-red-600': isWarning()
+            }" stroke-width="12" stroke-linecap="round" [attr.stroke-dasharray]="2 * Math.PI * 104"
+          [attr.stroke-dashoffset]="2 * Math.PI * 104 * (1 - progressPercentage() / 100)" />
+      </svg>
+
+      <!-- Texto central con diseño premium -->
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div class="text-center">
+          <div class="text-5xl font-black mb-1 transition-colors duration-300" [ngClass]="{
+                'text-blue-700': !isWarning(),
+                'text-red-700': isWarning()
+              }">
+            {{ formattedTime() }}
+          </div>
+          <div class="text-xs font-bold text-gray-400 uppercase tracking-widest">Tiempo Restante</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón de cancelar con estilo moderno -->
+  <button (click)="onCancelReservation()"
+    class="w-full bg-white/50 hover:bg-red-50 text-red-600 font-bold py-4 px-6 rounded-2xl border border-red-100 hover:border-red-200 transition-all duration-300 shadow-sm hover:shadow-md flex items-center justify-center gap-2 group">
+    <svg class="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor"
+      viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+    </svg>
+    CANCELAR RESERVA
+  </button>
+
+</div>
+}
