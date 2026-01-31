@@ -11,7 +11,7 @@ module.exports = {
           primary: '#2C5282',
           secondary: '#4A5568',
         },
-        
+
         // Textos
         text: {
           title: '#2C5282',
@@ -22,7 +22,7 @@ module.exports = {
           white: '#FFFFFF',
           'light-hover': '#E2E8F0',
         },
-        
+
         // Fondos
         background: {
           primary: '#FFFFFF',
@@ -30,7 +30,7 @@ module.exports = {
           dark: '#2D3748',
           darker: '#1A202C',
         },
-        
+
         // Estados de dispositivos IoT
         device: {
           available: '#22C55E',
@@ -56,5 +56,6 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/forms'),
+    require('flowbite/plugin'),
   ],
 }

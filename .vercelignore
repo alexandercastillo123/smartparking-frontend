@@ -1,0 +1,15 @@
+.angular
+.vscode
+node_modules
+dist
+build.log
+build_log.txt
+frontend_build.log
+frontend_errors.txt
+frontend_log.txt
+start_log.txt
+proxy.conf.json
+.vscode
+.git
+.gitignore
+.editorconfig
